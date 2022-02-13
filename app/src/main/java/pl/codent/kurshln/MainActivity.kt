@@ -2,9 +2,12 @@ package pl.codent.kurshln
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Contacts
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import org.jetbrains.anko.UI
+import org.jetbrains.anko.custom.async
 import kotlin.system.measureNanoTime
 
 class MainActivity : AppCompatActivity() {
@@ -21,10 +24,22 @@ class MainActivity : AppCompatActivity() {
 
         var person2 = Person.create()
         Log.d("tag","companion object was created \n $timep")
+        /*  implementation with anko lib. but Anko is deprecated.
+          async(UI){
+            val dataSource = DataSource()
+            val data = bg{dataSource.getData()}
+            txtvw.text=data.await()
+        }
+         */
+
+        val dataSource = DataSource()
+        val data = dataSource.getData()
+        txtvw.text=data
+
 
         Toast.makeText(applicationContext, "${person2.surname}", Toast.LENGTH_LONG).show()
     }
-    private fun stringExample(){
+    private fun stringExample():Unit{
         var str: String? = null
         if (str != null){
             str="ok"
